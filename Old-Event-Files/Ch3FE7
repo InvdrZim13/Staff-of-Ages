@@ -1,0 +1,213 @@
+#define DISABLE_TUTORIALS
+#include EAstdlib.event
+
+EventPointerTable(0x15,Pointers)
+EventPointerTable(0x14,TileChanges)
+
+ORG 0x119A300
+
+Pointers:
+POIN Turn_events
+POIN Character_events
+POIN Location_events
+POIN Misc_events
+POIN TrapData TrapData
+POIN Bad Bad Bad Bad
+POIN Good Good Good Good
+POIN Opening_event Ending_event
+
+Good:
+UNIT 0x01 0x01 0x00 Level(1, Ally, 0) [0,14] [0,13] [0x44, 0x6B] NoAI
+UNIT 0x02 0x03 0x01 Level(1, Ally, 0) [0,14] [0,14] [0x37, 0x6B] NoAI
+UNIT 0x17 0x28 0x01 Level(1, Ally, 0) [0,14] [1,14] [0x14,0x01,0x6B] NoAI
+UNIT 0x08 0x12 0x01 Level(5, Ally, 0) [0,14] [1,13] [0x20] NoAI
+UNIT
+
+Bad:
+UNIT 0x23 0x3C 0x8E Level(7,Enemy, 0) [14,2][14,2][0x1,0x6A] StealFromChests
+UNIT 0x8E 0x12 0x0 Level(4,Enemy,1) [14,1][14,1][0x2A,0x28]Guard
+UNIT 0x3E 0x14 0x8E Level(3,Enemy,1) [14,7][14,7][0x14,0x1C] AttackInRange
+UNIT 0x9D 0x20 0x8E Level(3,Enemy,1)[6,10][6,10][0x37,0x6B] AttackInRange
+UNIT 0x68 0x0A 0x8E Level(3,Enemy,1) [13,14][13,14][0x3] PursueWithoutHeed
+UNIT 0x69 0x12 0x8E Level(3,Enemy,1) [10,9][10,9][0x1F] AttackInRange
+UNIT 0x3E 0x14 0x8E Level(3,Enemy,1) [6,4][6,4][0x1C,0x14]AttackInRange
+UNIT 0x8A 0x20 0x8E Level(3,Enemy,1)[16,9][16,9][0x37] PursueWithoutHeed
+UNIT 0x67 0x18 0x8E Level(3,Enemy,1)[10,3][10,3][0x32,0x2C] PursueWithoutHeed
+UNIT 0x9D 0x0A 0x8E Level(2,Enemy,1) [2,1][2,1][0x01,0x6B] PursueWithoutHeed
+UNIT
+
+Turn_events:
+TurnEventPlayer(0x0,Opening_event,1)
+TURN 0x12 MageRein [3,0] 0x0 0x00
+End_MAIN
+
+Character_events:
+CHAR 0xE ByakRecruit 0x36 0x23 0x00 //0x0C0003
+CHAR 0xE ByakRecruit2 0x0B 0x23 0x00 //0x0C0003
+End_MAIN
+
+Location_events:
+Door(14,6)
+Door(5,5)
+DOOR 0x0B SecondDoorOpen [9,10] 0x10
+Chest(0x1C,8,11)
+Chest(0x38,6,9)
+Chest(0x5B,16,12)
+LOCA 0x3 [6,13] 0x11
+End_MAIN
+
+Misc_events:
+CauseGameOverIfLordDies
+DefeatBoss(Ending_event)
+End_MAIN
+
+TrapData:
+End_MAIN
+
+Opening_event:
+FADI 0x10
+BACG 0x5B
+FADU 0x10
+TEX6 0x5 [0,0] 0x0851 
+_ASM0x42 0x83181
+_0x89
+BACG 0x5B
+LOU1 Bad
+ENUN
+REMA
+SHOWMAP
+LOU1 Good
+ENUN
+BACG 0x3F //abandoned fortress
+MUS1 0x033
+TEX1 0x852
+REMA
+LOU1 MontaKaetsu
+ENUN
+FADI 0x10
+BACG 0x5B
+FADU 0x10
+BACG 0x3F
+TEX1 0x85C
+MORETEXT 0x85D
+MORETEXT 0x85E
+MUEN 5
+REMA
+STAL 0x10
+ENUN
+CAM1 [14,1]
+CURF [14,1]
+FADI 0x10
+BACG 0x5B
+FADU 0x10
+BACG 0x42
+MUS1 0x054
+TEX1 0x853
+MUEN 5
+REMA
+ENDA
+
+Ending_event:
+FADI 0x10
+BACG 0x5B
+FADU 0x10
+MUS1 0x38
+BACG 0x3F
+IFET 0x10 0xE
+TEX1 0x858
+FADI 0x10
+BACG 0x5B
+FADU 0x10
+BACG 0x3F
+FADI 0x10
+BACG 0x5B
+FADU 0x10
+BACG 0x3F
+TEX1 0x859
+ELSE 0x11
+ENIF 0x10
+TEX1 0x858
+ENIF 0x11
+FADI 0x10
+BACG 0x5B
+FADU 0x10
+MUS1 0x02F
+BACG 0x5B
+MNCH 0x4
+ENDA
+
+// Events
+ByakTalk:
+TEX1 0x85A
+REMA
+ENDA
+
+ByakRecruit:
+MUS1 0x0042
+TEX1 0x855
+REMA
+CUSI 0x23 $00
+MURE 0x05
+ENUT 0x0C
+ENDA
+
+ByakRecruit2:
+MUS1 0x0042
+TEX1 0x854
+REMA
+CUSI 0x23 $00
+MURE 0x05
+ENUT 0x0C
+ENDA
+
+SecondDoorOpen:
+MAC1 0x0B 0x00
+ENDA
+
+TileChanges:
+TileMap(0, 14, 6, 1, 1, Door1)
+TileMap(5, 5, 5, 1, 2, Door2)
+TileMap(4, 6, 13, 1, 1, Wall1)
+TileMap(6,8,11,1,1,Chest1)
+TileMap(7,6,9,1,1,Chest2)
+TileMap(8,16,12,1,1,Chest3)
+TileMap(11,9,10,1,1,Vert2)
+TileMapEnd
+MESSAGE Tile changes end at offset currentOffset
+Door1:
+BYTE 0xD4 0x0C
+Door2:
+BYTE 0xD4 0x0C
+Wall1:
+BYTE 0xD4 0x0C
+Chest1:
+BYTE 0x04 0x01
+Chest2:
+BYTE 0x04 0x01
+Chest3:
+BYTE 0x04 0x01
+Vert1:
+BYTE 0xD4 0x0C
+Vert2:
+BYTE 0xD4 0x0C
+// Manual Movement
+MageRein:
+LOU1 MageGuy
+ENUN
+ENDA
+// Scripted Fights
+
+// Units
+ALIGN 4
+MontaKaetsu:
+UNIT 0x36 0x38 0x02 Level(1, Ally, 0) [3,10][3,13][0x14,0x6B] NoAI
+UNIT 0x0B 0x14 0x02 Level(5, Ally, 0) [2,10][3,14][0x14,0x1C] NoAI
+UNIT
+
+MageGuy:
+UNIT 0x8A 0x20 0x8E Level(3,Enemy,1)[2,1][2,1][0x37] PursueWithoutHeed
+UNIT
+
+// Shop Data
+
+MESSAGE Events end at offset currentOffset
