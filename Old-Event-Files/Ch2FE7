@@ -1,0 +1,144 @@
+#define DISABLE_TUTORIALS
+#include EAstdlib.event
+
+EventPointerTable(0x0F,Pointers)
+
+ORG 0x1108D00
+
+Pointers:
+POIN Turn_events
+POIN Character_events
+POIN Location_events
+POIN Misc_events
+POIN TrapData TrapData
+POIN Bad Bad Bad Bad
+POIN Good Good Good Good
+POIN Opening_event Ending_event
+
+Good:
+UNIT 0x03 0x35 0x00 Level(1, Ally, 0) [19,14] [16,11] [0x01, 0x6B] NoAI
+UNIT 0x1B 0x2C 0x00 Level(1, Ally, 0) [19,14] [17,11] [0x4A, 0x6B] NoAI
+UNIT
+
+Bad:
+UNIT 0x8D 0x18 0x0 Level(6,Enemy,True) [16,14] [16,12] [0x32,0x2D] Guard
+UNIT 0xBA 0x12 0x8D Level(1,Enemy,True) [16,14][17,10] [0x1F] AttackInRange
+UNIT 0xBC 0x18 0x8D Level(1,Enemy,True) [16,14][17,12] [0x32] AttackInRange
+UNIT 0xBA 0x12 0x8D Level(1,Enemy,True) [16,14][16,10] [0x1F] AttackInRange
+UNIT 0xBB 0x20 0x8D Level(1,Enemy,True) [16,14][18,12] [0x37] AttackInRange
+UNIT
+
+Turn_events:
+TurnEventPlayer(0x0,Opening_event,1)
+End_MAIN
+
+Character_events:
+End_MAIN
+
+Location_events:
+End_MAIN
+
+Misc_events:
+CauseGameOverIfLordDies
+DefeatBoss(Ending_event)
+End_MAIN
+
+TrapData:
+End_MAIN
+
+Opening_event:
+//OOBB
+MUS1 0x02F
+HIDEMAP
+MUS1 0x02F
+FADI 0x10
+BACG 0x5B
+FADU 0x10
+TEX6 0x5 [0,0] 0x0845
+_ASM0x42 0x83181
+_0x89
+SHOWMAP
+LOMA 0x2 [20,15]
+LOU1 Good
+ENUN
+MUS1 0x33
+TEX1 0x846
+REMA
+MUEN 0x5
+LOU1 Bad
+ENUN
+MUS1 0x32
+TEX1 0x847
+REMA
+SOUN 0x2FF
+SCRO
+STAL 25
+KILL [17,10]
+CAM1 0x04
+ENUN
+LOU1 GoodRein
+ENUN
+TEX1 0x849
+REMA
+TEX1 0x84A
+REMA
+MOVE [18,0] [20,0]
+ENUN
+DISA [20,0]
+MOVE 0x04 [15,9]
+ENUN
+MOVE 0x0D [18,9]
+ENUN
+TEX1 0x84B
+REMA
+TEX1 0x84C
+REMA
+MOVE [16,12] MoveBoss
+ENUN
+LOU1 BadRein
+ENDA
+
+Ending_event:
+FADI 0x10
+MUS1 0x38
+BACG 0x22
+FADI 0x10
+TEX1 0x850
+SOUN 0x89
+MORETEXT 0x085B
+FADI 0x10
+BACG 0x5B
+FADU 0x10
+MNCH 0x3
+ENDA
+
+// Events
+
+// Manual Movement
+MoveBoss:
+MOMA left up up left left left left left down left left left left left left left up up up up left up up up up up left left
+
+// Scripted Fights
+
+
+// Units
+ALIGN 4
+GoodRein:
+UNIT 0x04 0x0B 0x00 Level(5, Ally, 0) [19,0] [17,1] [0x01, 0x6B] NoAI
+UNIT 0x1D 0x32 0x00 Level(3, Ally, 0) [19,0] [18,0] [0x15, 0x1C, 0x6B] NoAI
+UNIT 0x0D 0x18 0x00 Level(3, Ally, 0) [19,0] [17,0] [0x32,0x2C, 0x6B] NoAI
+UNIT
+
+ALIGN 4
+BadRein:
+UNIT 0xBC 0x18 0x8D Level(2,Enemy,True) [3,10][5,14] [0x2C] AttackInRange
+UNIT 0xBF 0x39 0x8D Level(2,Enemy,True) [3,10][5,10] [0x1F] AttackInRange
+UNIT 0xBB 0x20 0x8D Level(2,Enemy,True) [3,10][10,10] [0x37] PursueWithoutHeed
+UNIT 0xBD 0x28 0x8D Level(2,Enemy,True) [3,10][2,6] [0x14,0x1] [0x00,0x22,0x02,0x00]
+UNIT 0xB9 0x0A 0x8D Level(2,Enemy,True) [7,0][11,3][0x01] AttackInRange
+UNIT 0xBD 0x28 0x8D Level(2,Enemy,True) [7,0][5,0] [0x14,0x1] [0x00,0x22,0x02,0x00]
+UNIT 0xB8 0x0A 0x8D Level(5,Enemy,True) [11,3][8,2] [0x03, 0x60]AttackInRange
+UNIT
+// Shop Data
+
+MESSAGE Events end at offset currentOffset
