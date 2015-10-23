@@ -72,6 +72,7 @@ TURN 0x0 BadRein[6,0] 0x0
 END_MAIN
 
 CharacterBasedEvents:
+//TODO: Add talks
 END_MAIN
 
 LocationBasedEvents:
@@ -121,16 +122,19 @@ MUS1 0x00
 ENDA
 
 EndingScene:
+//TODO: Add ending events
 ENDA
 
 // Events
 Eagl:
 _LOAD1 0x1 Eag
 ENUN
+//TODO: Add join dialogue
 ENDA
 Eli:
 _LOAD1 0x1 Elijah
 ENUN
+//TODO: Add join dialogue
 ENDA
 BadRein:
 _LOAD1 0x1 BadRe
