@@ -1,0 +1,200 @@
+//Made by markyjoe1990 of Youtube
+//Modified by Nintenlord
+
+#define DISABLE_TUTORIALS
+#include EAstdlib.event
+
+EventPointerTable(0x1B,Pointers)
+
+
+ORG 0x145E120
+Pointers:
+POIN Turn_events 
+POIN Character_events 
+POIN Location_events 
+POIN Misc_events
+POIN TrapData TrapData
+POIN Bad Bad Bad Bad
+POIN Good Good Good Good
+POIN Opening_event Ending_event
+
+Bad:
+UNIT 0x94 0x21 0x00 Level(5, Enemy,1) [12,15] [12,11] [0x38] Guard
+UNIT 0xBA 0x12 0x94 Level(4,Enemy,1) [12,11] [10,13] [0x1F] PursueWithoutHeed
+UNIT 0xBB 0x20 0x94 Level(3,Enemy,1) [12,11] [15,10] [0x37] AttackInRange
+UNIT 0xBC 0x18 0x94 Level(5,Enemy,1) [12,11] [11,10] [0x2C] PursueWithoutHeed
+UNIT 0xC1 0x14 0x94 Level(3,Enemy,1) [12,11] [13,12] [0x14,0x1C] AttackInRange
+UNIT 0xBA 0x12 0x94 Level(4,Enemy,1) [12,11] [16,14] [0x1F] PursueWithoutHeed
+UNIT 0xBD 0x28 0x94 Level(5,Enemy,1) [12,11] [12,14] [0x14] AttackInRange
+UNIT 0xBA 0x12 0x94 Level(3,Enemy,1) [15,3] [15,3] [0x1F] AttackInRange
+UNIT 0xB8 0x20 0x94 Level(3,Enemy,1) [15,3] [12,3] [0x37, 0x6B] AttackInRange
+UNIT 0xBB 0x1C 0x94 Level(4,Enemy,1) [15,3] [8,2] [0x3E] AttackInRange
+UNIT 0xBB 0x1C 0x94 Level(4,Enemy,1) [15,3] [10,6] [0x3E] AttackInRange
+UNIT 0xBC 0x18 0x94 Level(5,Enemy,1) [15,3] [18,6] [0x32] AttackInRange
+UNIT 0xBA 0x12 0x94 Level(5,Enemy,1) [3,13] [3,13] [0x1F] AttackInRange
+UNIT 0xB9 0xA 0x94 Level(3,Enemy,1) [3,13] [6,8] [0x1] AttackInRange
+UNIT 0xBB 0x24 0x94 Level(4,Enemy,1) [3,13] [1,11] [0x44] AttackInRange
+UNIT 0xB9 0xA 0x94 Level(4,Enemy,1) [3,13] [6,15] [0x1] PursueWithoutHeed
+UNIT
+
+Good:
+UNIT 0x03 0x35 0x00 Level(1, Ally, 0) [2,1] [3,3] [0x01, 0x6B] NoAI
+UNIT 0x1B 0x2C 0x00 Level(1, Ally, 0) [2,1] [1,2] [0x4A, 0x6B] NoAI
+UNIT 0x04 0x0B 0x00 Level(5, Ally, 0) [2,1] [3,2] [0x01, 0x6B] NoAI
+UNIT 0x0D 0x18 0x00 Level(3, Ally, 0) [2,1] [2,3] [0x32,0x2C, 0x6B] NoAI
+UNIT
+
+Turn_events:
+OpeningTurnEvent(Opening_event)
+TURN 0 ReginaAppears[01,00] 0x08 0x00
+TURN 0 EscHelp[01,00] 0x00 0x00
+TURN 0 
+END_MAIN
+
+Character_events:
+END_MAIN
+
+Location_events:
+Village(0x12,AlainRec,10,1)
+END_MAIN
+
+Misc_events:
+CauseGameOverIfLordDies
+AREA 0x0 EscapeTown [20,14][20,14]
+END_MAIN
+
+Opening_event:
+HIDEMAP
+FADI 0x10
+BACG 0x5B
+FADU 0x10
+TEX6 0x5 [0,0] 0x0861 //Intro Scene
+_ASM0x42 0x83181
+_0x89
+OOBB
+LOMA 0x4 [7,5]
+CAM1[7,5]
+CURF[2,1]
+FADI 0x10
+BACG 0x5B
+FADU 0x10
+BACG 0x0D
+TEX1 0x0862 //Belle and Oona's talk
+FADI 0x10
+BACG 0x5B
+FADU 0x10 //moving outside
+REMA
+SHOWMAP
+LOU1 Bad
+ENUN
+CAM1[13,10]
+CURF[12,11]
+TEX1 0x864 //baddies appear
+REMA
+MOVE 0x94 MoveReg
+ENUN
+STAL 0x20
+CAM1[7,5]
+CURF[2,1]
+FADI 0x10
+BACG 0x5B
+FADU 0x10 //moving back inside
+BACG 0x0D
+TEX1 0x0863 //Grace warns them of baddies
+FADI 0x10
+BACG 0x5B
+FADU 0x10
+REMA
+SHOWMAP
+LOU1 Good
+ENUN
+TEX1 0x865
+MORETEXT 0x866
+REMA
+ENDA
+
+Ending_event:
+FADI 0x10
+BACG 0x5B
+FADU 0x10
+BACG 0x05
+MUS1 0x38
+IFET 0x10 0x12
+TEX1 0x86D
+FADI 0x10
+BACG 0x5B
+FADU 0x10
+BACG 0x05
+TEX1 0x86E
+MORETEXT 0x86F
+ELSE 0x11
+ENIF 0x10
+TEX1 0x86D
+ENIF 0x11
+MUEN 5
+MUS1 0x2F
+MNCH 0x5
+ENDA
+
+TrapData:
+ENDTRAP
+
+//Events
+ALIGN 4
+ReginaAppears:
+TEX1 0x0867
+REMA
+ENDA
+
+AlainRec:
+FADI 0x10
+BACG 0x5B
+FADU 0x10
+BACG 0x02
+MUS1 0x42
+IFCA 0x00 0x01 0x03
+TEX1 0x868
+REMA
+ELSE 0x20
+ENIF 0x01
+IFCA 0x00 0x21 0x1B
+TEX1 0x869
+REMA
+ENIF 0x21
+IFCA 0x00 0x22 0x04
+TEX1 0x86B
+REMA
+ENIF 0x22
+IFCA 0x00 0x23 0x0D
+TEX1 0x86C
+REMA
+ENIF 0x23
+ENIF 0x20
+LOU1 Al
+ENUN
+ENDA
+
+EscapeTown:
+JUMP Ending_event
+
+EscHelp:
+MUS1 0x05
+TEX1 0x86A
+REMA
+CAM1[13,11]
+CURF[20,14]
+STAL 10
+ENDA
+
+//Movement
+MoveReg:
+MOMA down down down right right right right right right right
+
+//Reinforcements
+ALIGN 4
+Al:
+UNIT 0x18 0x29 0x00 Level(3, Ally, 0) [10,1][10,2][0x1F,0x6B] NoAI
+UNIT
+
+MESSAGE Events end at offset currentOffset
+//The map for this chapter is at offset: ????????
